@@ -16,6 +16,40 @@ knitr::opts_chunk$set(echo = TRUE)
 fertilizer_df <- read_csv("fertilizer.csv")
 grain_df <- read_csv("grain.csv")
 ```
+##1. Patterns in Yield Over Time
+
+####Create a Finalized Graph of Yield Over Time for Each Grain
+```{r}
+#Create All Crops Dataframe
+all_crops_clean <- grain_df %>%
+  filter(yield != "NA")
+#Create All Crops Plot
+all_crops_plot_yield <- ggplot(all_crops_clean, aes(x=year, y=yield)) +
+  geom_line(aes(color = commodity)) +
+  labs(y = "Crop Yield (bushels/acre)", x = "Year", color = "Commodity") +
+  theme_classic() +
+  ggtitle("US Agricultural Crop Yield from 1866 to 2016") +
+  scale_y_continuous(expand = c(0,0), limits = c(0, 180), breaks = seq(0, 180, 20)) +
+  scale_x_continuous(expand= c(0,0), breaks = seq(1866, 2016, 20))
+  
+all_crops_plot_yield
+
+
+#SAME PLOT BUT FACET WRAPPED FOR SEPARATENESS
+all_crops_plot_FACET <- ggplot(all_crops_clean, aes(x=year, y=yield)) +
+  geom_line() +
+  labs(y = "Crop Yield (bushels/acre)", x = "Year", color = "Commodity") +
+  theme_classic() +
+  ggtitle("US Agricultural Crop Yield from 1866 to 2016") +
+  scale_y_continuous(expand = c(0,0), limits = c(0, 180), breaks = seq(0, 180, 30)) +
+  scale_x_continuous(expand= c(0,0), breaks = seq(1866, 2016, 30))+
+  facet_wrap(~commodity, scale = "free")
+  
+all_crops_plot_FACET
+
+
+
+```
 
 ##2. Fertilizer Use
 
@@ -85,8 +119,28 @@ all_crops_plot <- ggplot(fertilizer_df, aes(x=year, y=ppa)) +
   
 all_crops_plot
 ```
+####Describe Differences in Fertilizer Use for Each Crop
+```{r}
+#Find Differences for Wheat
+mwu_wheat <- fertilizer_wheat %>%
+  wilcox.test(ppa ~ fertilizer, data = .)
+mwu_wheat
+
+#Find Differences for Corn
+mwu_corn <- fertilizer_corn %>%
+  wilcox.test(ppa ~ fertilizer, data = .)
+mwu_corn
+
+#Find Differences for Soybeans
+mwu_soybean <- fertilizer_soybean %>%
+  wilcox.test(ppa ~ fertilizer, data = .)
+mwu_soybean
+```
+
+
 
 ##3. Case Study: Corn and Fertilizer
+
 ####Create a Finalized Plot of Corn Yield vs. PPA
 ```{r}
 #Create Corn Yield Dataframe
@@ -103,7 +157,7 @@ corn_yield_fert_plot <- ggplot(corn_yield_use, aes(x = ppa, y = yield)) +
   labs(y = "Crop Yield (bushels/acre)", x = "Fertilizer Application (lbs/acre)", color = "Year", shape = "Fertilizer") +
   theme_classic() +
   scale_color_gradient(low = "firebrick2", high = "chartreuse") +
-  ggtitle("US Fertilizer Use on Corn vs. Crop Yield from 1964 to 2016") +
+  ggtitle("US Fertilizer Use on Corn and Resulting Crop Yield from 1964 to 2016") +
   scale_y_continuous(expand = c(0,0), limits = c(30, 180), breaks = seq(0, 180, 20)) +
   scale_x_continuous(expand= c(0,0), limits = c(30, 160), breaks = seq(0, 160, 20))
 
