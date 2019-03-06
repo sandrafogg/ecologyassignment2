@@ -30,13 +30,59 @@ wheat_plot <- ggplot(fertilizer_wheat, aes(x=year, y=ppa)) +
   geom_line(aes(color = fertilizer)) +
   labs(y = "Pounds per Acre (lbs/acre)", x = "Year", color = "Fertilizer") +
   theme_classic() +
-  ggtitle("US Agricultural Fertilizer Use from 1964 to 2016") +
+  ggtitle("US Agricultural Fertilizer Use on Wheat from 1964 to 2016") +
   scale_y_continuous(expand = c(0,0), limits = c(0, 100), breaks = seq(0, 100, 10)) +
   scale_x_continuous(expand= c(0,0), breaks = seq(1964, 2024, 10))+
   scale_color_brewer(palette = "Dark2")
   
- 
-
 wheat_plot
+
+
+#Create Corn Dataframe
+fertilizer_corn <- fertilizer_df %>%
+  filter(ppa != "NA",
+         crop == "Corn")
+#Create Corn Plot
+wheat_plot <- ggplot(fertilizer_corn, aes(x=year, y=ppa)) +
+  geom_line(aes(color = fertilizer)) +
+  labs(y = "Pounds per Acre (lbs/acre)", x = "Year", color = "Fertilizer") +
+  theme_classic() +
+  ggtitle("US Agricultural Fertilizer Use on Corn from 1964 to 2016") +
+  scale_y_continuous(expand = c(0,0), limits = c(0, 100), breaks = seq(0, 100, 10)) +
+  scale_x_continuous(expand= c(0,0), breaks = seq(1964, 2024, 10))+
+  scale_color_brewer(palette = "Dark2")
+  
+Corn_plot
+
+
+#Create Soybean Dataframe
+fertilizer_soybean <- fertilizer_df %>%
+  filter(ppa != "NA",
+         crop == "Soybeans")
+#Create Soybean Plot
+soybean_plot <- ggplot(fertilizer_soybean, aes(x=year, y=ppa)) +
+  geom_line(aes(color = fertilizer)) +
+  labs(y = "Pounds per Acre (lbs/acre)", x = "Year", color = "Fertilizer") +
+  theme_classic() +
+  ggtitle("US Agricultural Fertilizer Use on Soybeans from 1964 to 2016") +
+  scale_y_continuous(expand = c(0,0), limits = c(0, 100), breaks = seq(0, 100, 10)) +
+  scale_x_continuous(expand= c(0,0), breaks = seq(1964, 2024, 10))+
+  scale_color_brewer(palette = "Dark2")
+  
+soybean_plot
+
+
+#Create All Crops Plot
+all_crops_plot <- ggplot(fertilizer_df, aes(x=year, y=ppa)) +
+  geom_line(aes(color = fertilizer)) +
+  labs(y = "Pounds per Acre (lbs/acre)", x = "Year", color = "Fertilizer") +
+  theme_classic() +
+  ggtitle("US Agricultural Fertilizer Use from 1964 to 2016") +
+  scale_y_continuous(expand = c(0,0), limits = c(0, 150), breaks = seq(0, 150, 10)) +
+  scale_x_continuous(expand= c(0,0), limits = c(1964, 2018), breaks = seq(1964, 2018, 10))+
+  scale_color_brewer(palette = "Dark2") +
+  facet_wrap(~crop, scale = "free") 
+  
+all_crops_plot
 ```
 
