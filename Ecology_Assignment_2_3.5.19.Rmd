@@ -18,9 +18,9 @@ grain_df <- read_csv("grain.csv")
 ```
 
 ##2. Fertilizer Use
-```{r}
-#Create a Finalized Plot of Fertilizer Use vs. Time for Each Crop
 
+####Create a Finalized Plot of Fertilizer Use vs. Time for Each Crop
+```{r}
 #Create Wheat Dataframe
 fertilizer_wheat <- fertilizer_df %>%
   filter(ppa != "NA",
@@ -28,7 +28,7 @@ fertilizer_wheat <- fertilizer_df %>%
 #Create Wheat Plot
 wheat_plot <- ggplot(fertilizer_wheat, aes(x=year, y=ppa)) +
   geom_line(aes(color = fertilizer)) +
-  labs(y = "Pounds per Acre (lbs/acre)", x = "Year", color = "Fertilizer") +
+  labs(y = "Fertilizer Application (lbs/acre)", x = "Year", color = "Fertilizer") +
   theme_classic() +
   ggtitle("US Agricultural Fertilizer Use on Wheat from 1964 to 2016") +
   scale_y_continuous(expand = c(0,0), limits = c(0, 100), breaks = seq(0, 100, 10)) +
@@ -45,7 +45,7 @@ fertilizer_corn <- fertilizer_df %>%
 #Create Corn Plot
 wheat_plot <- ggplot(fertilizer_corn, aes(x=year, y=ppa)) +
   geom_line(aes(color = fertilizer)) +
-  labs(y = "Pounds per Acre (lbs/acre)", x = "Year", color = "Fertilizer") +
+  labs(y = "Fertilizer Application (lbs/acre)", x = "Year", color = "Fertilizer") +
   theme_classic() +
   ggtitle("US Agricultural Fertilizer Use on Corn from 1964 to 2016") +
   scale_y_continuous(expand = c(0,0), limits = c(0, 100), breaks = seq(0, 100, 10)) +
@@ -62,7 +62,7 @@ fertilizer_soybean <- fertilizer_df %>%
 #Create Soybean Plot
 soybean_plot <- ggplot(fertilizer_soybean, aes(x=year, y=ppa)) +
   geom_line(aes(color = fertilizer)) +
-  labs(y = "Pounds per Acre (lbs/acre)", x = "Year", color = "Fertilizer") +
+  labs(y = "Fertilizer Application (lbs/acre)", x = "Year", color = "Fertilizer") +
   theme_classic() +
   ggtitle("US Agricultural Fertilizer Use on Soybeans from 1964 to 2016") +
   scale_y_continuous(expand = c(0,0), limits = c(0, 100), breaks = seq(0, 100, 10)) +
@@ -75,7 +75,7 @@ soybean_plot
 #Create All Crops Plot
 all_crops_plot <- ggplot(fertilizer_df, aes(x=year, y=ppa)) +
   geom_line(aes(color = fertilizer)) +
-  labs(y = "Pounds per Acre (lbs/acre)", x = "Year", color = "Fertilizer") +
+  labs(y = "Fertilizer Application (lbs/acre)", x = "Year", color = "Fertilizer") +
   theme_classic() +
   ggtitle("US Agricultural Fertilizer Use from 1964 to 2016") +
   scale_y_continuous(expand = c(0,0), limits = c(0, 150), breaks = seq(0, 150, 10)) +
@@ -84,5 +84,31 @@ all_crops_plot <- ggplot(fertilizer_df, aes(x=year, y=ppa)) +
   facet_wrap(~crop, scale = "free") 
   
 all_crops_plot
+```
+
+##3. Case Study: Corn and Fertilizer
+####Create a Finalized Plot of Corn Yield vs. PPA
+```{r}
+#Create Corn Yield Dataframe
+grain_years_df <- grain_df[grain_df$year >= 1963 & grain_df$year <=2017,] 
+corn_yield <- grain_years_df %>% 
+  filter(yield != "NA",
+         commodity == "Corn")
+
+corn_yield_use <- merge(fertilizer_corn,corn_yield, sort = TRUE)
+corn_yield_use
+#Create Corn Yield Plot
+corn_yield_fert_plot <- ggplot(corn_yield_use, aes(x = ppa, y = yield)) +
+  geom_point(aes(color = year, shape = fertilizer), size = 3, alpha = 0.9) +
+  labs(y = "Crop Yield (bushels/acre)", x = "Fertilizer Application (lbs/acre)", color = "Year", shape = "Fertilizer") +
+  theme_classic() +
+  scale_color_gradient(low = "firebrick2", high = "chartreuse") +
+  ggtitle("US Fertilizer Use on Corn vs. Crop Yield from 1964 to 2016") +
+  scale_y_continuous(expand = c(0,0), limits = c(30, 180), breaks = seq(0, 180, 20)) +
+  scale_x_continuous(expand= c(0,0), limits = c(30, 160), breaks = seq(0, 160, 20))
+
+  
+corn_yield_fert_plot
+ 
 ```
 
