@@ -1,0 +1,42 @@
+---
+title: "Ecology Assignment 2"
+author: "Sandra Fogg"
+date: "3/5/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+#Load Packages in Console
+
+#Load Data Sets
+fertilizer_df <- read_csv("fertilizer.csv")
+grain_df <- read_csv("grain.csv")
+```
+
+##2. Fertilizer Use
+```{r}
+#Create a Finalized Plot of Fertilizer Use vs. Time for Each Crop
+
+#Create Wheat Dataframe
+fertilizer_wheat <- fertilizer_df %>%
+  filter(ppa != "NA",
+         crop == "Wheat")
+#Create Wheat Plot
+wheat_plot <- ggplot(fertilizer_wheat, aes(x=year, y=ppa)) +
+  geom_line(aes(color = fertilizer)) +
+  labs(y = "Pounds per Acre (lbs/acre)", x = "Year", color = "Fertilizer") +
+  theme_classic() +
+  ggtitle("US Agricultural Fertilizer Use from 1964 to 2016") +
+  scale_y_continuous(expand = c(0,0), limits = c(0, 100), breaks = seq(0, 100, 10)) +
+  scale_x_continuous(expand= c(0,0), breaks = seq(1964, 2024, 10))+
+  scale_color_brewer(palette = "Dark2")
+  
+ 
+
+wheat_plot
+```
+
