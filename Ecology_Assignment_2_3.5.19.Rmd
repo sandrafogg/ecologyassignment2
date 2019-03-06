@@ -48,6 +48,56 @@ all_crops_plot_FACET <- ggplot(all_crops_clean, aes(x=year, y=yield)) +
 all_crops_plot_FACET
 
 
+#SEPARATE PLOT FOR EACH GRAIN
+#Plot for Corn
+corn_yield_clean <- all_crops_clean %>% 
+  filter(commodity == "Corn")
+corn_yield_plot <- ggplot(corn_yield_clean, aes(x=year, y=yield)) +
+  geom_line() +
+  labs(y = "Crop Yield (bushels/acre)", x = "Year") +
+  theme_classic() +
+  ggtitle("US Corn Yield from 1866 to 2016") +
+  scale_y_continuous(expand = c(0,0), limits = c(0, 180), breaks = seq(0, 180, 20)) +
+  scale_x_continuous(expand= c(0,0), breaks = seq(1866, 2016, 20))
+corn_yield_plot
+
+#Plot for Barley
+barley_yield_clean <- all_crops_clean %>% 
+  filter(commodity == "Barley")
+barley_yield_plot <- ggplot(barley_yield_clean, aes(x=year, y=yield)) +
+  geom_line() +
+  labs(y = "Crop Yield (bushels/acre)", x = "Year") +
+  theme_classic() +
+  ggtitle("US Barley Yield from 1866 to 2016") +
+  scale_y_continuous(expand = c(0,0), limits = c(0, 100), breaks = seq(0, 100, 20)) +
+  scale_x_continuous(expand= c(0,0), breaks = seq(1866, 2016, 20))
+barley_yield_plot
+
+#Plot for Oats
+oats_yield_clean <- all_crops_clean %>% 
+  filter(commodity == "Oats")
+oats_yield_plot <- ggplot(oats_yield_clean, aes(x=year, y=yield)) +
+  geom_line() +
+  labs(y = "Crop Yield (bushels/acre)", x = "Year") +
+  theme_classic() +
+  ggtitle("US Oats Yield from 1866 to 2016") +
+  scale_y_continuous(expand = c(0,0), limits = c(0, 100), breaks = seq(0, 100, 20)) +
+    scale_x_continuous(expand= c(0,0), breaks = seq(1866, 2016, 20))
+oats_yield_plot
+
+
+#Plot for Sorghum
+sorghum_yield_clean <- all_crops_clean %>% 
+  filter(commodity == "Sorghum")
+sorghum_yield_plot <- ggplot(sorghum_yield_clean, aes(x=year, y=yield)) +
+  geom_line() +
+  labs(y = "Crop Yield (bushels/acre)", x = "Year") +
+  theme_classic() +
+  ggtitle("US Sorghum Yield from 1919 to 2016") +
+  scale_y_continuous(expand = c(0,0), limits = c(0, 100), breaks = seq(0, 100, 20)) +
+    scale_x_continuous(expand= c(0,0), breaks = seq(1910, 2016, 10))
+sorghum_yield_plot
+
 
 ```
 
