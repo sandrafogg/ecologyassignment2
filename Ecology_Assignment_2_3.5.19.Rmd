@@ -15,6 +15,8 @@ knitr::opts_chunk$set(echo = TRUE)
 #Load Data Sets
 fertilizer_df <- read_csv("fertilizer.csv")
 grain_df <- read_csv("grain.csv")
+
+
 ```
 ##1. Patterns in Yield Over Time
 
@@ -25,7 +27,7 @@ all_crops_clean <- grain_df %>%
   filter(yield != "NA")
 #Create All Crops Plot
 all_crops_plot_yield <- ggplot(all_crops_clean, aes(x=year, y=yield)) +
-  geom_line(aes(color = commodity)) +
+  geom_point(aes(color = commodity), alpha=0.4) +
   labs(y = "Crop Yield (bushels/acre)", x = "Year", color = "Commodity") +
   theme_classic() +
   ggtitle("US Agricultural Crop Yield from 1866 to 2016") +
@@ -33,6 +35,10 @@ all_crops_plot_yield <- ggplot(all_crops_clean, aes(x=year, y=yield)) +
   scale_x_continuous(expand= c(0,0), breaks = seq(1866, 2016, 20))
   
 all_crops_plot_yield
+
+all_crops_animated <- ggplotly(all_crops_plot_yield)
+all_crops_animated
+all_crops_motion <- gganimate(all_crops_plot_yield)
 
 
 #SAME PLOT BUT FACET WRAPPED FOR SEPARATENESS
@@ -100,6 +106,8 @@ sorghum_yield_plot
 
 
 ```
+Corn is linear with a lower plateau.
+Barley is linear with a lower plateau.
 
 ##2. Fertilizer Use
 
@@ -158,11 +166,11 @@ soybean_plot
 
 #Create All Crops Plot
 all_crops_plot <- ggplot(fertilizer_df, aes(x=year, y=ppa)) +
-  geom_line(aes(color = fertilizer)) +
+  geom_point(aes(color = fertilizer), alpha = 0.5) +
   labs(y = "Fertilizer Application (lbs/acre)", x = "Year", color = "Fertilizer") +
   theme_classic() +
   ggtitle("US Agricultural Fertilizer Use from 1964 to 2016") +
-  scale_y_continuous(expand = c(0,0), limits = c(0, 150), breaks = seq(0, 150, 10)) +
+  scale_y_continuous(expand = c(0,0), limits = c(0, 150), breaks = seq(0, 150, 20)) +
   scale_x_continuous(expand= c(0,0), limits = c(1964, 2018), breaks = seq(1964, 2018, 10))+
   scale_color_brewer(palette = "Dark2") +
   facet_wrap(~crop, scale = "free") 
@@ -170,23 +178,8 @@ all_crops_plot <- ggplot(fertilizer_df, aes(x=year, y=ppa)) +
 all_crops_plot
 ```
 ####Describe Differences in Fertilizer Use for Each Crop
-```{r}
-#Find Differences for Wheat
-mwu_wheat <- fertilizer_wheat %>%
-  wilcox.test(ppa ~ fertilizer, data = .)
-mwu_wheat
 
-#Find Differences for Corn
-mwu_corn <- fertilizer_corn %>%
-  wilcox.test(ppa ~ fertilizer, data = .)
-mwu_corn
-
-#Find Differences for Soybeans
-mwu_soybean <- fertilizer_soybean %>%
-  wilcox.test(ppa ~ fertilizer, data = .)
-mwu_soybean
-```
-
+Corn and Wheat are primarily treated with Nitrogen fertilizer, although corn requires significantly more fertilizer than wheat, suggesting that Nitrogen is the limiting factor for plant growth. Corn's extensive nutrient needs may be attributable to an inefficient uptake of Nitrogen.  Soybeans are instead predominantly treated with Potassium, and are treated with very small amounts of Nitrogen.  This is probably due to the nitrogen-fixing symbiotic organisms that live in the nodules of soybean plants, which enable them to acquire more Nitrogen from the surrounding soils.  It is thus likely that Potassium is the limiting nutrient for soybean growth. While Phosphate fertilizer levels are a bit higher for corn, the three crops don't appear to have a drastic difference in Phosphate application and require similar levels.  Also it is important to note that the ratios of N:P:K vary a lot between the three crops.  Corn and soybeans appear to have much larger ratios of the three nutrients, while the demand for nutrients is more evenly distributed for wheat.  
 
 
 ##3. Case Study: Corn and Fertilizer
@@ -215,4 +208,4 @@ corn_yield_fert_plot <- ggplot(corn_yield_use, aes(x = ppa, y = yield)) +
 corn_yield_fert_plot
  
 ```
-
+Similar to the plot shown in class about cereal yield and Nitrogen fertilizer use in countries of varying stages in development, there appears to be positive linear relationship between the two.  Intensification of Nitrogen fertilizer has increased by almost four times the amount applied in the 1960s, producing higher crop yields as a result. However, the other two fertilizers, Phosphate and Potassium, do not seem to share this trend.  While it appears there have been small increases in Phosphate and Potassium fertilizers since the 1960s, application amounts have appeared to remain relatively steady.  Despite the consistency of fertilizer application, yields have increased over time.  It is possible that this is due to more efficient strategies of Phosphate and Potassium fertilizer delivery.  
