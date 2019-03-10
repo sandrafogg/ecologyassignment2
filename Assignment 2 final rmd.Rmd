@@ -57,10 +57,13 @@ all_crops_plot_FACET
 ```
 
 ####Describe which Statistical Models Characterize Trends
-Corn is linear with a lower plateau.
-Barley is linear with a lower plateau.
-Oats is linear with a lower plateau.
-Sorghum? Who knows. 
+Corn is linear with a lower plateau, as exemplified by its sharp incline around the late 1940s, after relatively steady yields the previous 80 years.  
+
+Barley similiarly is a linear with a lower plateau model.  Barley's growth coincided with corn in the 1940s, however the magnitude of the growth was much less. 
+
+Oats also reflect the same model and trend.  The boom of oat yields resembled barley, with a similar temporal and abundance trend.
+
+Sorghum, however, is better described by the linear piecewise (PW) model. The data for sorghum is limited, and thus it is harder to describe a long-term trend than the other three.  However, where the other three crops began to consistently have higher yields after the 1940s, sorghum appeared to level off after the initial increasing, suggesting a decreasing PW model. 
 
 ##2. Fertilizer Use
 
@@ -89,6 +92,12 @@ Corn and Wheat are primarily treated with Nitrogen fertilizer, although corn req
 ####Delve into Agricultural Literature
 
 While Nitrogen is crucial to the growth of soybeans, about 50%-60% of the Nitrogen requirements are met by biological N~2~ fixation in soils (Salvagiotti et al, 2008).  Due to this availability, soybeans are restricted by other nutrients including Phosphate and Potassium.  Potassium is the most limiting of these nutrients, requiring the highest amounts of fertilization for soybean plants.  Soybeans remove 0.8 lbs/bushel of P~2~O~5~, which necessitates Phosphate fertilization.  However, the crop removes almost twice as much Potassium, 1.4 lbs/bushel K~2~O, which is why Potassium must be added in the highest amounts to sustain crop yield (Staton, 2014). 
+
+Salvagiotti, F. et al. Nitrogen uptake, fixation and response to fertilizer N in soybeans: A review. 
+  Field Crops Res. 108, 1–13 (2008).
+  
+Staton, M. Phosphorus and potassium fertilizer recommendations for high-yielding, profitable soybeans.
+  Michigan State University Extension. (2014).
 
 
 
